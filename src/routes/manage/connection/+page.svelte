@@ -25,7 +25,7 @@
 
 		// verify server is valid
 		try {
-			await fetch(e.target.url.value);
+			await fetch(e.target.url.value + "/api");
 			setServer(e.target.url.value);
 			window.location.href = "/";
 		} catch {
