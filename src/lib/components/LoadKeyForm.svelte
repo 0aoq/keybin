@@ -8,18 +8,50 @@
 	import init__loadServer, { server } from "$lib/actions/loadServer";
 	import { onMount } from "svelte";
 
+	import init__PocketBase from "$lib/actions/pocketbase";
+	import PocketBase from "pocketbase";
+
+	let pb: PocketBase = new PocketBase();
+
 	onMount(() => {
+		// run action inits
 		init__loadServer();
+
 		if (server === "") isErrored = true; // prevent use of form with no server
-		else isErrored = false;
+		else {
+			isErrored = false;
+			let _pb = init__PocketBase(server);
+			if (!_pb) return;
+			pb = _pb;
+		}
 	});
 
 	// functions
 	let searchErrored = false;
 
-	async function search() {
-		if (isErrored) return;
+	async function search(e: any) {
+		if (isErrored || !pb) return;
 		isLoading = true;
+
+		// try to find resource
+		try {
+			const resource = await pb.collection("bins").getOne(e.target.id.value);
+			window.location.href = `/bin/${resource.id}`;
+			isLoading = false;
+		} catch {
+			try {
+				// try getting it by name
+				const resource = await pb
+					.collection("bins")
+					.getFirstListItem(`title = "${e.target.id.value}"`);
+					
+				window.location.href = `/bin/${resource.id}`;
+				isLoading = false;
+			} catch {
+				searchErrored = true;
+				isLoading = false;
+			}
+		}
 
 		// time out search
 		setTimeout(() => {
@@ -79,17 +111,19 @@
 	>
 		<input
 			type="text"
-			placeholder="🔍  Key"
+			placeholder="🔍  Key/Name"
 			style="width: var(--u-100);"
 			required
 			disabled={isErrored}
 			minlength="4"
+			name="id"
 			class={searchErrored === true ? "errored" : ""}
+			autocomplete="off"
 		/>
 
 		<button style="width: var(--u-28);"
 			>{#if !isLoading}
-				Search ➜
+				Search &rarr;
 			{:else}
 				<Loader />
 			{/if}</button

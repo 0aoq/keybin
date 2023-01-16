@@ -16,7 +16,7 @@
 
 <style>
 	.loader {
-		animation: blinkAndTransform infinite ease-in-out 2s running;
+		animation: blink infinite ease-in-out 2s running;
 		display: flex;
 		justify-content: center;
 		align-items: center;
