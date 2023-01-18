@@ -29,19 +29,31 @@
 	});
 
 	// functions
+	let binType: "normal" | "html" = "normal";
 	let errorMessage = "";
 	async function create(e: any) {
 		isLoading = true;
 		if (!pb.authStore.model) return;
 
 		try {
-			const record = await pb.collection("bins").create({
-				creator: pb.authStore.model.id,
-				title: e.target.title.value,
-				nodes: []
-			});
+			if (binType === "normal") {
+				const record = await pb.collection("bins").create({
+					creator: pb.authStore.model.id,
+					title: e.target.title.value,
+					nodes: []
+				});
 
-			window.location.href = `/bin/${record.id}`;
+				window.location.href = `/bin/${record.id}`;
+			} else {
+				// create html bin
+				const record = await pb.collection("htmlbins").create({
+					creator: pb.authStore.model.id,
+					title: e.target.title.value,
+					html: "<h1>Hello, world!</h1>"
+				});
+
+				window.location.href = `/bin/html/${record.id}/edit`;
+			}
 		} catch {
 			errorMessage = "Failed to create bin, make sure the name is unique!";
 			isLoading = false;
@@ -90,6 +102,24 @@
 				<h2>Create Bin</h2>
 				<a href="/bin/my">My Bins</a>/<a href="/bin/create">Create Bin</a>
 
+				<card class="mt-8 mb-4 flex" style="gap: var(--u-2);">
+					<button
+						disabled={isLoading}
+						class="{binType !== 'normal' ? 'secondary' : ''} round"
+						on:click={() => {
+							binType = "normal";
+						}}>Normal Bin</button
+					>
+
+					<button
+						disabled={isLoading}
+						class="{binType !== 'html' ? 'secondary' : ''} round"
+						on:click={() => {
+							binType = "html";
+						}}>HTML Bin</button
+					>
+				</card>
+
 				<card class="flex justify-center mt-8">
 					<form
 						class="flex justify-center"
@@ -97,7 +127,14 @@
 						on:submit|preventDefault={create}
 					>
 						<p class="form-label">Title</p>
-						<input type="text" placeholder="Title" name="title" minlength="4" maxlength="32" autocomplete="off" />
+						<input
+							type="text"
+							placeholder="Title"
+							name="title"
+							minlength="4"
+							maxlength="32"
+							autocomplete="off"
+						/>
 
 						<button class="mt-4" style="width: 100%;"
 							>{#if !isLoading} Create {:else} <Loader /> {/if}</button

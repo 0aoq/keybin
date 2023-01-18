@@ -14,7 +14,9 @@
 	let pb: PocketBase = new PocketBase();
 
 	let isLoading = true;
+
 	let bins: Record[] = [];
+	let htmlBins: Record[] = [];
 
 	onMount(async () => {
 		// run action inits
@@ -32,6 +34,12 @@
 		try {
 			bins = (
 				await pb.collection("bins").getList(1, 50, {
+					filter: `creator.id = "${pb.authStore.model.id}"`
+				})
+			).items;
+
+			htmlBins = (
+				await pb.collection("htmlbins").getList(1, 50, {
 					filter: `creator.id = "${pb.authStore.model.id}"`
 				})
 			).items;
@@ -94,9 +102,25 @@
 						<Loader />
 					{:else}
 						{#each bins as bin}
-							<a href="/bin/{bin.id}" class="doNotAddHover!"><button class="secondary round">{bin.title}</button></a>
+							<a href="/bin/{bin.id}" class="doNotAddHover!"
+								><button class="secondary round">{bin.title}</button></a
+							>
 						{:else}
 							<p>No bins found! <a href="/bin/create">Create one</a></p>
+						{/each}
+					{/if}
+				</card>
+
+				<card class="flex justify-center mt-2" style="gap: var(--u-2); flex-wrap: wrap;">
+					{#if isLoading}
+						<Loader />
+					{:else}
+						{#each htmlBins as bin}
+							<a href="/bin/html/{bin.id}" class="doNotAddHover!"
+								><button class="secondary round">{bin.title}</button></a
+							>
+						{:else}
+							<p>No HTML bins found! <a href="/bin/create">Create one</a></p>
 						{/each}
 					{/if}
 				</card>
