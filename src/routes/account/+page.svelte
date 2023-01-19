@@ -160,6 +160,15 @@
 							{/if}</button
 						>
 
+						{#if currentForm === "signup"}
+							<p class="mt-4">
+								By creating your account, you agree to the <a
+									href="/page/content-notice.html"
+									class="mt-2">Keybin Content Notice</a
+								>.
+							</p>
+						{/if}
+
 						<p class="mt-2" style="color: var(--primary-low);">{errorMessage}</p>
 					</form>
 				</card>

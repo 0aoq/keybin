@@ -97,7 +97,8 @@
 					<a href="/bin/create"><button>Create Bin</button></a>
 				</card>
 
-				<card class="flex justify-center" style="gap: var(--u-2); flex-wrap: wrap;">
+				<h3 class="mt-4">Bins</h3>
+				<card class="flex justify-center mt-2" style="gap: var(--u-2); flex-wrap: wrap;">
 					{#if isLoading}
 						<Loader />
 					{:else}
@@ -111,6 +112,7 @@
 					{/if}
 				</card>
 
+				<h3 class="mt-4">HTML Bins</h3>
 				<card class="flex justify-center mt-2" style="gap: var(--u-2); flex-wrap: wrap;">
 					{#if isLoading}
 						<Loader />

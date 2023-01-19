@@ -96,6 +96,12 @@
 						>View Bin</button
 					>
 				</a>
+
+				<a href="/bin/html/{id}?nokbstyle">
+					<button class="secondary" style="height: max-content; width: max-content;"
+						>View Bin (No Default Style)</button
+					></a
+				>
 			{/if}
 		</div>
 	</nav>
