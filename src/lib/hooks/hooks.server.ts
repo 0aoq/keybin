@@ -8,9 +8,7 @@ export const handle = async ({ event, resolve }) => {
 	};
 
 	if (
-		event.url.pathname.startsWith("/bin/html") &&
-		!event.url.pathname.endsWith("/view-source") &&
-		!event.url.pathname.endsWith("/edit") &&
+		event.url.pathname.startsWith("/bin") &&
 		event.url.search.includes("nokbstyle")
 	) {
 		// remove CSS line

@@ -12,7 +12,7 @@
 
 	import init__PocketBase from "$lib/actions/pocketbase";
 	import PocketBase, { Record } from "pocketbase";
-	import Editor from "$lib/components/Editor.svelte";
+	import slideController from "$lib/components/slides/slideController";
 
 	let _server = ""; // <- needed to trigger state update
 	let pb: PocketBase = new PocketBase();
@@ -21,6 +21,9 @@
 
 	let bin: Record = new Record();
 	let isBinOwner = false;
+
+	let canvas: HTMLElement;
+	let controller: slideController;
 
 	onMount(async () => {
 		// run action inits
@@ -37,11 +40,16 @@
 		// load bin
 		try {
 			bin = await pb.collection("bins").getOne(id, {
-				filter: 'type = "html"'
+				filter: 'type = "slides"'
 			});
-			
+
 			isBinOwner = pb.authStore.model !== null && bin.creator === pb.authStore.model.id;
 			isLoading = false;
+
+			// init canvas
+			setTimeout(() => {
+				controller = new slideController(canvas, bin.nodes, true);
+			}, 100);
 		} catch {
 			alert("Failed to load bin!");
 		}
@@ -55,7 +63,7 @@
 <component>
 	<nav>
 		<div>
-			<a href="/bin/html/{id}">
+			<a href="/bin/slides/{id}">
 				<button>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -91,20 +99,22 @@
 						if (!pb || !pb.authStore.model || !isBinOwner) return;
 
 						try {
-							await pb.collection("bins").update(bin.id, bin);
+							await pb.collection("bins").update(bin.id, {
+								nodes: controller.buildSlides()
+							});
 						} catch {
 							alert("Failed to save bin!");
 						}
 					}}>Save Changes</button
 				>
 
-				<a href="/bin/html/{id}">
+				<a href="/bin/slides/{id}">
 					<button class="secondary" style="height: max-content; width: max-content;"
 						>View Bin</button
 					>
 				</a>
 
-				<a href="/bin/html/{id}?nokbstyle">
+				<a href="/bin/slides/{id}?nokbstyle">
 					<button class="secondary" style="height: max-content; width: max-content;"
 						>View Bin (No Default Style)</button
 					></a
@@ -121,27 +131,15 @@
 		</main>
 	{:else}
 		<div class="flex">
-			<Editor
-				lang="html"
-				width="49%"
-				height="calc(100vh - 65px);"
-				value={bin.nodes[0].content}
-				readonly={!isBinOwner}
-				blur={(v) => {
-					bin.nodes[0].content = v;
-					bin = bin;
-				}}
-			/>
-
-			<preview-pane>
-				{@html bin.nodes[0].content}
-			</preview-pane>
+			<slide-canvas bind:this={canvas} />
 		</div>
 	{/if}
 </component>
 
 <style>
-	preview-pane {
-		border-left: solid 1px var(--bg-surface-lowest);
+	slide-canvas {
+		display: block;
+		width: 100vw;
+		height: calc(100vh - 65px);
 	}
 </style>

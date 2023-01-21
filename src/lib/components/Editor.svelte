@@ -30,6 +30,10 @@
             .cm-editor {
                 height: ${height};
             }
+
+			.cm-gutters {
+				filter: invert(1) hue-rotate(180deg);
+			}
         </style>`;
 
 		setTimeout(() => {

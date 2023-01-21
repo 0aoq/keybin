@@ -40,7 +40,10 @@
 
 		// load bin
 		try {
-			bin = await pb.collection("htmlbins").getOne(id);
+			bin = await pb.collection("bins").getOne(id, {
+				filter: 'type = "html"'
+			});
+			
 			isLoading = false;
 		} catch {
 			alert("Failed to load bin!");
@@ -69,7 +72,7 @@
 				{/if}
 			</card>
 
-			<pre>{bin.html || ""}</pre>
+			<pre>{bin.nodes[0].content || ""}</pre>
 		{:else}
 			<card class="flex justify-center align-center"><Loader /></card>
 		{/if}

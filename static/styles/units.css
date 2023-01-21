@@ -236,6 +236,7 @@
 }
 .flex {
 	display: flex;
+	flex-wrap: wrap;
 }
 .flex.justify-start {
 	justify-content: start;

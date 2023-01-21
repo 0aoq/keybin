@@ -29,8 +29,9 @@
 	});
 
 	// functions
-	let binType: "normal" | "html" = "normal";
+	let binType: "normal" | "html" | "slides" = "normal";
 	let errorMessage = "";
+
 	async function create(e: any) {
 		isLoading = true;
 		if (!pb.authStore.model) return;
@@ -40,19 +41,31 @@
 				const record = await pb.collection("bins").create({
 					creator: pb.authStore.model.id,
 					title: e.target.title.value,
-					nodes: []
+					nodes: [],
+					type: "notebook"
 				});
 
 				window.location.href = `/bin/${record.id}`;
-			} else {
+			} else if (binType === "html") {
 				// create html bin
-				const record = await pb.collection("htmlbins").create({
+				const record = await pb.collection("bins").create({
 					creator: pb.authStore.model.id,
 					title: e.target.title.value,
-					html: "<h1>Hello, world!</h1>"
+					nodes: [{ id: 0, type: "html", content: "<h1>Hello, world!</h1>" }],
+					type: "html"
 				});
 
 				window.location.href = `/bin/html/${record.id}/edit`;
+			} else {
+				// create slides bin
+				const record = await pb.collection("bins").create({
+					creator: pb.authStore.model.id,
+					title: e.target.title.value,
+					nodes: [{ id: 0, type: "slide", content: "" }],
+					type: "slides"
+				});
+
+				window.location.href = `/bin/slides/${record.id}/edit`;
 			}
 		} catch {
 			errorMessage = "Failed to create bin, make sure the name is unique!";
@@ -117,6 +130,14 @@
 						on:click={() => {
 							binType = "html";
 						}}>HTML Bin</button
+					>
+
+					<button
+						disabled={isLoading}
+						class="{binType !== 'slides' ? 'secondary' : ''} round"
+						on:click={() => {
+							binType = "slides";
+						}}>Slides</button
 					>
 				</card>
 

@@ -17,6 +17,7 @@
 
 	let bins: Record[] = [];
 	let htmlBins: Record[] = [];
+	let slideBins: Record[] = [];
 
 	onMount(async () => {
 		// run action inits
@@ -34,13 +35,19 @@
 		try {
 			bins = (
 				await pb.collection("bins").getList(1, 50, {
-					filter: `creator.id = "${pb.authStore.model.id}"`
+					filter: `creator.id = "${pb.authStore.model.id}" && type = "notebook"`
 				})
 			).items;
 
 			htmlBins = (
-				await pb.collection("htmlbins").getList(1, 50, {
-					filter: `creator.id = "${pb.authStore.model.id}"`
+				await pb.collection("bins").getList(1, 50, {
+					filter: `creator.id = "${pb.authStore.model.id}" && type = "html"`
+				})
+			).items;
+
+			slideBins = (
+				await pb.collection("bins").getList(1, 50, {
+					filter: `creator.id = "${pb.authStore.model.id}" && type = "slides"`
 				})
 			).items;
 
@@ -123,6 +130,21 @@
 							>
 						{:else}
 							<p>No HTML bins found! <a href="/bin/create">Create one</a></p>
+						{/each}
+					{/if}
+				</card>
+
+				<h3 class="mt-4">Slides</h3>
+				<card class="flex justify-center mt-2" style="gap: var(--u-2); flex-wrap: wrap;">
+					{#if isLoading}
+						<Loader />
+					{:else}
+						{#each slideBins as bin}
+							<a href="/bin/html/{bin.id}" class="doNotAddHover!"
+								><button class="secondary round">{bin.title}</button></a
+							>
+						{:else}
+							<p>No slide bins found! <a href="/bin/create">Create one</a></p>
 						{/each}
 					{/if}
 				</card>

@@ -37,7 +37,10 @@
 
 		// load bin
 		try {
-			bin = await pb.collection("htmlbins").getOne(id);
+			bin = await pb.collection("bins").getOne(id, {
+				filter: 'type = "html"'
+			});
+
 			isLoading = false;
 		} catch {
 			alert("Failed to load bin!");
@@ -53,7 +56,7 @@
 
 <component>
 	{#if !isLoading}
-		{@html bin.html || ""}
+		{@html bin.nodes[0].content || ""}
 
 		<a href="/bin/html/{id}/view-source">
 			<button
