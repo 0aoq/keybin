@@ -140,7 +140,7 @@
 						<Loader />
 					{:else}
 						{#each slideBins as bin}
-							<a href="/bin/html/{bin.id}" class="doNotAddHover!"
+							<a href="/bin/slides/{bin.id}" class="doNotAddHover!"
 								><button class="secondary round">{bin.title}</button></a
 							>
 						{:else}

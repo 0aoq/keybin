@@ -31,8 +31,10 @@
                 height: ${height};
             }
 
-			.cm-gutters {
-				filter: invert(1) hue-rotate(180deg);
+			@media (prefers-color-scheme: dark) {
+				.cm-gutters, span {
+					filter: invert(1) hue-rotate(180deg);
+				}
 			}
         </style>`;
 

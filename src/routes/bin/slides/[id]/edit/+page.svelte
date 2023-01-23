@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Loader from "$lib/components/Loader.svelte";
+	import Editor from "$lib/components/Editor.svelte";
 
 	import type { PageData } from "./$types";
 	import { onMount } from "svelte";
@@ -130,8 +131,20 @@
 			</card>
 		</main>
 	{:else}
-		<div class="flex">
-			<slide-canvas bind:this={canvas} />
+		<div class="flex justify-center align-center">
+			<Editor
+				lang="html"
+				width="50%"
+				height="calc(100vh - 65px);"
+				value={bin.nodes[(controller || { currentSlide: 0 }).currentSlide].content}
+				readonly={!isBinOwner}
+				blur={(v) => {
+					bin.nodes[0].content = v;
+					bin = bin;
+				}}
+			/>
+
+			<slide-canvas bind:this={canvas} style="width: 50%; box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);" />
 		</div>
 	{/if}
 </component>
