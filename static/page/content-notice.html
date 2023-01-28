@@ -10,11 +10,11 @@
 
 		<title>Keybin Content Notice</title>
 
-        <style>
-            hr {
-                border-color: var(--primary);
-            }
-        </style>
+		<style>
+			hr {
+				border-color: var(--primary);
+			}
+		</style>
 	</head>
 
 	<body>
@@ -36,16 +36,107 @@
 				A "Bin" uploaded to Keybin can be of two types: a <un>normal bin</un><sup>[1]</sup> which
 				allows users to manage text and code blocks, and an <un>HTML bin</un><sup>[1]</sup>. HTML
 				bins allow users to create fully custom HTML pages and share them with other users through
-				Keybin. These HTML pages can be used by untrustworthy actors to leverage the Keybin service to trick
-				users into downloading malicious files or submitting personal information.<br /><br />
+				Keybin. These HTML pages can be used by untrustworthy actors to leverage the Keybin service
+				to trick users into downloading malicious files or submitting personal information.<br /><br />
 
-				Keybin is not responsible for the content found on a Keybin bin or HTML bin. <!-- Bins can be
+				Keybin is not responsible for the content found on a Keybin bin or HTML bin.
+				<!-- Bins can be
 				reported to the
 				<un>client host</un><sup>[2]</sup> this message is being viewed on by clicking
 				<a href="/bin/report">here</a>. -->
 			</p>
 
 			<hr class="mb-4 mt-2" />
+
+			<div class="flex" style="gap: var(--u-2)">
+				<details>
+					<summary>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-help-circle"
+						>
+							<circle cx="12" cy="12" r="10" />
+							<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+							<line x1="12" y1="17" x2="12.01" y2="17" />
+						</svg>
+
+						What is a Bin?
+					</summary>
+
+					<p>
+						A <un>bin</un> is any content uploaded and managed on Keybin. This could be notebooks,
+						HTML pages or slideshows.
+					</p>
+				</details>
+
+				<details>
+					<summary>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-help-circle"
+						>
+							<circle cx="12" cy="12" r="10" />
+							<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+							<line x1="12" y1="17" x2="12.01" y2="17" />
+						</svg>
+
+						What is a Client Host?
+					</summary>
+
+					<p>
+						A <un>client host</un> is a server that is hosting the Keybin client. Modifications can
+						be made by the client host to the client that is served from their server.
+					</p>
+				</details>
+
+				<details>
+					<summary>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-help-circle"
+						>
+							<circle cx="12" cy="12" r="10" />
+							<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+							<line x1="12" y1="17" x2="12.01" y2="17" />
+						</svg>
+
+						What is a Server Host?
+					</summary>
+
+					<p>
+						A <un>server host</un> is a server that is hosting the required
+						<a href="https://pocketbase.io" target="_blank" rel="noreferrer">PocketBase</a> schema.
+						All files uploaded to Keybin and user accounts registered from a Keybin client will be
+						stored on this server.
+					</p>
+				</details>
+			</div>
+
+			<hr class="mb-4 mt-4" />
 
 			<card class="mt-8 flex justify-center">
 				<a href="/">

@@ -17,9 +17,10 @@ export type Slide = {
  */
 export default class slideController {
 	private domParser: DOMParser;
-	private isEditor: boolean;
 	private canvas: ShadowRoot;
-	
+
+	public slides: Array<Slide>;
+	public isEditor: boolean;
 	public currentSlide: number;
 
 	/**
@@ -40,19 +41,27 @@ export default class slideController {
 		// add default styles
 		this.canvas.innerHTML += `<style>@import url("/styles/slides.css");</style>`;
 
-		// register first slide
+		// register all slides
 		this.currentSlide = 0;
-		this.registerSlide(slides[0]);
+
+		for (let slide of slides) {
+			this.registerSlide(slide);
+
+			// hide slie if it is not the current slide
+			if (slides.indexOf(slide) !== this.currentSlide)
+				(this.canvas.getElementById(slide.id) as HTMLElement).style.display = "none";
+		}
+
+		this.slides = slides;
 	}
 
 	/**
 	 * @function registerSlide
 	 *
-	 * @private
 	 * @param {Slide} slide
 	 * @memberof slideController
 	 */
-	private registerSlide(slide: Slide) {
+	public registerSlide(slide: Slide) {
 		const doc = this.domParser.parseFromString(slide.content, "text/html");
 
 		// create slide element
@@ -65,6 +74,8 @@ export default class slideController {
 			// load node loads elements from this.doc to this.canvas
 			this.loadNode(element, slideElement);
 		}
+
+		this.slides = this.buildSlides();
 	}
 
 	/**
@@ -123,11 +134,43 @@ export default class slideController {
 	 *
 	 * @param {Array<Slide>} slides
 	 * @param {("<" | ">")} [direction=">"]
+	 * @returns {void | boolean}
+	 * @memberof slideController
+	 */
+	public Slide(direction: "<" | ">" = ">"): void | boolean {
+		if (
+			direction === "<"
+				? this.currentSlide === 0
+				: direction === ">"
+				? this.currentSlide >= this.slides.length - 1
+				: ""
+		)
+			return false;
+
+		direction === "<" ? this.currentSlide-- : this.currentSlide++;
+
+		for (let element of this.canvas.querySelectorAll("slide"))
+			(element as HTMLElement).style.display = "none";
+
+		// if slide is already rendered, switch to it
+		if (this.canvas.getElementById(this.slides[this.currentSlide].id)) {
+			const element = this.canvas.getElementById(this.slides[this.currentSlide].id) as HTMLElement;
+			element.style.display = "block";
+			element.innerHTML = this.slides[this.currentSlide].content;
+		} else this.registerSlide(this.slides[this.currentSlide]);
+	}
+
+	/**
+	 * @function rerenderSlide
+	 *
+	 * @param {string} id
 	 * @returns {void}
 	 * @memberof slideController
 	 */
-	public Slide(slides: Array<Slide>, direction: "<" | ">" = ">"): void {
-		direction === "<" ? this.currentSlide-- : this.currentSlide++;
-		this.registerSlide(slides[this.currentSlide]);
+	public rerenderSlide(id: string): void {
+		if (this.canvas.getElementById(id)) {
+			const element = this.canvas.getElementById(id) as HTMLElement;
+			element.innerHTML = this.slides[parseFloat(id)].content;
+		} else return
 	}
 }

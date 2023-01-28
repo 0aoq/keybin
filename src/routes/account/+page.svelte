@@ -210,16 +210,42 @@
 				</p>
 				<p><span class="form-label">Server:</span> {_server}</p>
 
-				<p class="mt-8">
-					This account is valid <un>only</un> in the server listed above! Your active server can be
-					changed by going to <a href="/manage/connection">manage connection</a>. If you change your
-					server, your account will <un>not</un> move to this new server!<br /><br />
+				<div class="flex">
+					<details class="mt-8">
+						<summary>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-help-circle"
+								><circle cx="12" cy="12" r="10" /><path
+									d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"
+								/><line x1="12" y1="17" x2="12.01" y2="17" /></svg
+							>
 
-					<un>You can</un> still view bins from other servers through a link. If the address
-					contains a temporary server assignment &lpar;<code
-						>?server=&lbrace;Server URL&rbrace;</code
-					>&rpar; in the address, the bin can be viewed <un>without</un> changing your server.
-				</p>
+							Where is my account valid?
+						</summary>
+
+						<p>
+							This account is valid <un>only</un> in the server it was created in &lpar;<code
+								>{_server}</code
+							>&rpar;. Your active server can be changed by going to
+							<a href="/manage/connection">manage connection</a>. If you change your server, your
+							account will <un>not</un> move to this new server!<br /><br />
+
+							<un>You can</un> still view bins from other servers through a link. If the address
+							contains a temporary server assignment &lpar;<code
+								>?server=&lbrace;Server URL&rbrace;</code
+							>&rpar; in the address, the bin can be viewed <un>without</un> changing your server.
+						</p>
+					</details>
+				</div>
 			{/if}
 		</card>
 

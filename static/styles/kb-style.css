@@ -243,6 +243,31 @@ nav div:nth-child(2) {
 	gap: inherit;
 }
 
+/* details element */
+
+details {
+	padding: 0.8rem;
+	width: 100%;
+	background: var(--bg-surface-low);
+	border-radius: 0.4rem;
+}
+
+details summary {
+	display: flex;
+	align-items: center;
+	gap: var(--u-4);
+	font-weight: 700;
+	transition: all 0.15s;
+	cursor: pointer;
+}
+
+details[open] summary {
+	margin-bottom: var(--u-4);
+	padding-bottom: var(--u-4);
+	border-bottom: solid 1px var(--primary);
+	color: var(--primary);
+}
+
 /* animations */
 
 @keyframes blink {
