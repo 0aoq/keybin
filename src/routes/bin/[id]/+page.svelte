@@ -27,11 +27,6 @@
 		// run action inits
 		init__loadServer();
 
-		// respect ?server param
-		if (new URLSearchParams(window.location.search).get("server")) {
-			tempSetServer(new URLSearchParams(window.location.search).get("server") as string);
-		}
-
 		_server = server;
 		// if (server === "") window.location.href = "/manage/connection";
 
@@ -85,8 +80,8 @@
 <component>
 	<nav>
 		<div>
-			<a href="/">
-				<button>
+			<a href="/" aria-label="Home Button">
+				<button aria-label="Home Button">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

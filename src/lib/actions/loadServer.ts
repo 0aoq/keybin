@@ -24,7 +24,7 @@ export function setServer(_server: string) {
  * @export
  * @param {string} _server
  */
- export function tempSetServer(_server: string) {
+export function tempSetServer(_server: string) {
 	server = _server;
 }
 
@@ -33,6 +33,11 @@ export function setServer(_server: string) {
  *
  * @export
  */
- export default function __init() {
+export default function __init() {
 	server = window.localStorage.getItem("keybin-server") || "";
+
+	// respect ?server param
+	if (new URLSearchParams(window.location.search).get("server")) {
+		tempSetServer(new URLSearchParams(window.location.search).get("server") as string);
+	}
 }

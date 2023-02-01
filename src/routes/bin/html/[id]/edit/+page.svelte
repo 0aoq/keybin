@@ -55,8 +55,8 @@
 <component>
 	<nav>
 		<div>
-			<a href="/bin/html/{id}">
-				<button>
+			<a href="/bin/html/{id}" aria-label="View Bin">
+				<button  aria-label="View Bin">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

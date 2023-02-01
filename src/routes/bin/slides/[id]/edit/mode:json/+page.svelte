@@ -55,8 +55,8 @@
 <component>
 	<nav>
 		<div>
-			<a href="/bin/slides/{id}/edit">
-				<button>
+			<a href="/bin/slides/{id}/edit" aria-label="Edit Slideshow">
+				<button aria-label="Edit Slideshow">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

@@ -42,8 +42,8 @@
 <component>
 	<nav>
 		<div>
-			<a href="/">
-				<button>
+			<a href="/" aria-label="Home Button">
+				<button aria-label="Home Button">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

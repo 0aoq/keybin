@@ -56,6 +56,17 @@
 			alert("Failed to load bin!");
 		}
 	});
+
+	// cursor tracker
+	let cursor = { x: 0, y: 0, ox: 0, oy: 0 };
+
+	function mouseMoveOnCanvas(e: MouseEvent): void {
+		cursor.x = e.x;
+		cursor.y = e.y;
+
+		cursor.ox = e.offsetY;
+		cursor.oy = e.offsetX;
+	}
 </script>
 
 <svelte:head>
@@ -65,8 +76,8 @@
 <component>
 	<nav>
 		<div>
-			<a href="/bin/slides/{id}">
-				<button>
+			<a href="/bin/slides/{id}" aria-label="View Slide">
+				<button aria-label="View Slide">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -150,7 +161,22 @@
 			/>
 
 			<SlideController controllerModule={controller} slideId={id} />
-			<slide-canvas bind:this={canvas} style="width: 50%; box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);" />
+			<slide-canvas
+				bind:this={canvas}
+				style="width: 50%; box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);"
+				on:mousemove={mouseMoveOnCanvas}
+			/>
+
+			<div
+				class="cursor-tracker"
+				style="top: {cursor.y + 20}px; left: {cursor.x + 15}px; display: {cursor.x !== 0
+					? 'block'
+					: 'none'}"
+				on:mousemove={mouseMoveOnCanvas}
+			>
+				<!-- cursor tracker displays offset position so elements are where you expect them to be in view mode -->
+				X: <un>{cursor.ox}px</un>, Y: <un>{cursor.oy}px</un>
+			</div>
 		</div>
 	{/if}
 </component>
@@ -160,5 +186,16 @@
 		display: block;
 		width: 100vw;
 		height: calc(100vh - 65px);
+		position: relative;
+	}
+
+	.cursor-tracker {
+		position: absolute;
+		padding: 0.4rem;
+		background: rgb(50, 50, 50);
+		border: solid 2px rgb(100, 100, 100);
+		border-radius: 0.2rem;
+		z-index: 9999;
+		transition: all 0.05s;
 	}
 </style>
