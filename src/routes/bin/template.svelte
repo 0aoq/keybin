@@ -49,9 +49,6 @@
 	});
 
 	// functions
-	function setTitle(e: any): void {
-		bin.title = e.target.value;
-	}
 </script>
 
 <svelte:head>

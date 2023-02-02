@@ -79,6 +79,10 @@
 						}}>Save Changes</button
 					>
 
+					<a href="/bin/{id}/tree">
+						<button class="secondary">Open In KB Versions</button>
+					</a>
+
 					<button
 						class="secondary"
 						on:click={async () => {
