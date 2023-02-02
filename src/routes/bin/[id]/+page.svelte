@@ -127,16 +127,11 @@
 							}
 						}}>Save Changes</button
 					>
-
-					<button
-						class="secondary"
-						on:click={async () => {
-							if (!pb.authStore.model || !isBinOwner) return;
-							const confirmation = confirm("Are you sure you want to do this?");
-							if (!confirmation) return;
-							await pb.collection("bins").delete(bin.id);
-							window.location.href = "/";
-						}}>Delete Bin</button
+										
+					<a href="/manage/{id}">
+						<button class="secondary" style="height: max-content; width: max-content;"
+							>Manage</button
+						></a
 					>
 				</card>
 			{/if}

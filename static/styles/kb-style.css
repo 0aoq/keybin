@@ -128,6 +128,14 @@ textarea.errored,
 	animation: blink 0.5s ease-in-out 0s running;
 }
 
+@media (prefers-color-scheme: dark) {
+	input,
+	textarea,
+	[contenteditable="true"] {
+		color: var(--text-primary);
+	}
+}
+
 .form-label {
 	user-select: none;
 	color: var(--bg-surface-lowest);

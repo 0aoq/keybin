@@ -132,6 +132,12 @@
 						>View Bin (No Default Style)</button
 					></a
 				>
+
+				<a href="/manage/{id}">
+					<button class="secondary" style="height: max-content; width: max-content;"
+						>Manage</button
+					></a
+				>
 			{/if}
 		</div>
 	</nav>
