@@ -14,7 +14,9 @@
 	import init__PocketBase from "$lib/actions/pocketbase";
 	import PocketBase, { Record } from "pocketbase";
 	import StandardNav from "$lib/components/StandardNav.svelte";
-	import FileTree from "$lib/components/FileTree.svelte";
+
+	import FileTree from "$lib/components/kb-versions/FileTree.svelte";
+	import BinNav from "$lib/components/kb-versions/BinNav.svelte";
 
 	let _server = ""; // <- needed to trigger state update
 	let pb: PocketBase = new PocketBase();
@@ -54,7 +56,7 @@
 						left: `Node ${node.id}`,
 						right: "type of: " + node.type
 					},
-					link: `/bin/${id}/tree/${node.id}`
+					link: `/bin/${id}/tree/node/${node.id}`
 				});
 			}
 		} catch {
@@ -73,9 +75,7 @@
 	<StandardNav />
 
 	{#if !isLoading}
-		<card class="pt-12 pl-12 pb-12 pr-12" style="border-top: none;">
-			<h1>{bin.title}</h1>
-		</card>
+		<BinNav {bin} />
 
 		<main>
 			<card>
@@ -113,11 +113,12 @@
 					<p><span class="form-label">Creator ID: </span> {bin.creator}</p>
 					<p><span class="form-label">Bin ID: </span> {bin.id}</p>
 					<p><span class="form-label">Node Count: </span> {bin.nodes.length}</p>
-					<p><span class="form-label">Permanent Link: </span> 
-                        <code>
-                            {window.location.origin}/bin/{id}/tree?server={_server}
-                        </code>
-                    </p>
+					<p>
+						<span class="form-label">Permanent Link: </span>
+						<code>
+							{window.location.origin}/bin/{id}/tree?server={_server}
+						</code>
+					</p>
 				</details>
 
 				<details class="mt-2">
@@ -152,7 +153,7 @@
 				</details>
 			</card>
 
-            <Footer />
+			<Footer />
 		</main>
 	{:else}
 		<main>

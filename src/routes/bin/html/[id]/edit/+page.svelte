@@ -110,7 +110,7 @@
 					></a
 				>
 
-				<a href="/manage/{id}">
+				<a href="/bin/{id}/tree/settings">
 					<button class="secondary" style="height: max-content; width: max-content;"
 						>Manage</button
 					></a

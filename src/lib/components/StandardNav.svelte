@@ -46,7 +46,7 @@
 		<h1 class="ml-4"><a href="/">Keybin</a></h1>
 	</div>
 
-	<div class="flex" style="gap: var(--u-4);">
+	<div class="flex align-center" style="gap: var(--u-4);">
 		{#if _server !== ""}
 			{#if pb.authStore.model}
 				<a href="/bin/my">My Bins</a>

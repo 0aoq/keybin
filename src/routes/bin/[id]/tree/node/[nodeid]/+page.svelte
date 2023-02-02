@@ -3,7 +3,7 @@
 	import Loader from "$lib/components/Loader.svelte";
 	import Editor from "$lib/components/Editor.svelte";
 
-	import type { PageData } from "./view/$types";
+	import type { PageData } from "./$types";
 	import { onMount } from "svelte";
 
 	export let data: PageData;
@@ -84,7 +84,9 @@
 						if (!pb || !pb.authStore.model || !isBinOwner) return;
 
 						try {
-							await pb.collection("bins").update(bin.id, bin);
+							await pb.collection("bins").update(bin.id, {
+								nodes: bin.nodes
+							});
 						} catch {
 							alert("Failed to save bin!");
 						}
@@ -103,6 +105,7 @@
 						height="calc(var(--u-100) * 2)"
 						value={JSON.stringify(node)}
 						readonly={!isBinOwner}
+						dontFormat={true}
 						blur={(v) => {
 							bin.nodes[bin.nodes.indexOf(node)] = JSON.parse(v);
 							node = JSON.parse(v);

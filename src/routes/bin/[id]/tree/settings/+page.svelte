@@ -14,6 +14,8 @@
 
 	import init__PocketBase from "$lib/actions/pocketbase";
 	import PocketBase, { Record } from "pocketbase";
+	import StandardNav from "$lib/components/StandardNav.svelte";
+	import BinNav from "$lib/components/kb-versions/BinNav.svelte";
 
 	let _server = ""; // <- needed to trigger state update
 	let pb: PocketBase = new PocketBase();
@@ -59,6 +61,9 @@
 </svelte:head>
 
 <component>
+	<StandardNav />
+	<BinNav {bin} page="settings" />
+
 	<main>
 		{#if !isLoading}
 			{#if isBinOwner}
@@ -78,10 +83,6 @@
 							}
 						}}>Save Changes</button
 					>
-
-					<a href="/bin/{id}/tree">
-						<button class="secondary">Open In KB Versions</button>
-					</a>
 
 					<button
 						class="secondary"

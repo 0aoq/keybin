@@ -8,6 +8,7 @@
 	export let value: string;
 	export let blur: (value: string) => void;
 	export let readonly: boolean = false;
+	export let dontFormat: boolean = false;
 
 	// import codemirror
 	import { basicSetup } from "codemirror";
@@ -52,7 +53,8 @@
 					EditorView.updateListener.of((event: any) => {
 						editorValue = event.state.doc.toString();
 					}),
-					EditorState.readOnly.of(readonly)
+					EditorState.readOnly.of(readonly),
+					EditorView.lineWrapping
 				],
 				doc: value,
 				parent: editorElement.shadowRoot as any
@@ -68,7 +70,7 @@
 
 		// format
 		if (!editor) return;
-		if (lang === "json") {
+		if (lang === "json" && !dontFormat) {
 			editor.dispatch({
 				changes: {
 					from: 0,

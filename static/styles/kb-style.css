@@ -62,10 +62,13 @@ pre {
 	padding: 0.2rem;
 	font-family: monospace;
 	background: var(--bg-surface-lower);
-	white-space: pre;
 	border-radius: var(--border-radius-1);
 	box-shadow: 0 1px 1px var(--bg-surface-lowest);
 	text-shadow: 0 1px var(--bg-surface);
+}
+
+pre {
+	white-space: pre;
 }
 
 p,
